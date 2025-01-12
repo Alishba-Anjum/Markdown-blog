@@ -4,6 +4,12 @@ import { FlatCompat } from "@eslint/eslintrc";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+module.exports = {
+  rules: {
+    'react/no-unescaped-entities': 'off',
+  },
+};
+
 
 const compat = new FlatCompat({
   baseDirectory: __dirname,

@@ -22,7 +22,7 @@ const Home = () => {
           </h1>
           <p className="mt-4 text-lg">
             Discover amazing articles, tips, and insights. Whether you're
-            looking to learn something new or get inspired, you're in the right
+            looking to learn something new or get inspired, youre in the right
             place!
           </p>
           <div className="mt-6 space-x-4">

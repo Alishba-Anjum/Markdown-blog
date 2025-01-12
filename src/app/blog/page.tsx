@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { FaFolderPlus } from "react-icons/fa";
 
@@ -49,7 +50,7 @@ interface Post {
               <div  key={index} className="p-4 w-[350px] flex flex-col gap-4 h-auto border " >
               <h1>Gossips Blogs</h1>
                 <h1 className="font-bold text-2xl">{item.heading}</h1>
-                <img src={item.imageUrl} alt={item.heading} />
+                <Image src={item.imageUrl} alt={item.heading} width={300} height={300} />
                 <p>{item.description}</p>
                 <p className="  underline">{new Date(item.postDate).toLocaleDateString()}</p>
               </div>
