@@ -39,7 +39,7 @@ interface Post {
   
     return (
       <div>
-        <h1>{isClient ? 'This is never prerendered' : 'Prerendered'}</h1>
+       
         <div className="flex items-center mt-11 justify-between m-auto w-3/4 px-11">
             <h1 className="text-4xl font-bold text-center  "> Gossips Blogs</h1>
         <Link href="/studio/structure/blogPost;f4c43ba9-cb7f-47b2-b921-1961922e46a5%2Ctemplate%3DblogPost">
