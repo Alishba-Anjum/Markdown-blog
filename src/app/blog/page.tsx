@@ -1,8 +1,9 @@
 "use client";
+import { useState, useEffect } from "react";
+import { client } from "@/sanity/lib/client"; // Adjust the import path based on your setup
 import Image from "next/image";
 import Link from "next/link";
 import { FaFolderPlus } from "react-icons/fa";
-import { useState, useEffect } from "react";
 
 interface Post {
   heading: string;
@@ -11,73 +12,60 @@ interface Post {
   imageUrl: string;
 }
 
-async function fetchPosts(): Promise<Post[]> {
-  const projectId = "p1czusi5"; // Replace with your Sanity project ID
-  const dataset = "production"; // Replace with your dataset name
-  const query = `*[_type == 'blogPost']{
-    heading,
-    description,
-    postDate,
-    "imageUrl": image.asset->url
-  }`;
-  const url = `https://${projectId}.api.sanity.io/v2021-10-21/data/query/${dataset}?query=${encodeURIComponent(query)}`;
-
-  const response = await fetch(url);
-  if (!response.ok) throw new Error("Failed to fetch posts");
-
-  const data = await response.json();
-  return data.result as Post[];
-}
-
-export default function Blog() {
+const Blog = () => {
   const [posts, setPosts] = useState<Post[]>([]);
-  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const getPosts = async () => {
+    const fetchPosts = async () => {
       try {
-        const data = await fetchPosts();
+        const query = `*[_type == 'blogPost']{
+          heading,
+          description,
+          postDate,
+          "imageUrl": image.asset->url
+        }`;
+
+        const data = await client.fetch(query);
         setPosts(data);
-      } catch (err) {
-        setError("Failed to load posts. Please try again later.");
-        console.error("Error fetching posts:", err);
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
-    getPosts();
-  }, []); // Empty dependency array ensures this runs only once on mount.
+    fetchPosts();
+  }, []);
+
+  if (loading) return <p>Loading...</p>;
 
   return (
     <div>
       <div className="flex items-center mt-11 justify-between m-auto w-3/4 lg:px-11">
-        <h1 className="text-4xl font-bold text-center max-sm:text-xl">Gossips Blogs</h1>
-        <Link href="/studio/structure/blogPost;f4c43ba9-cb7f-47b2-b921-1961922e46a5%2Ctemplate%3DblogPost">
-          <button className="flex gap-4 items-center lg:text-2xl max-sm:text-xl max-sm:p-2 border lg:px-4 lg:py-3 rounded-lg border-black">
-            <FaFolderPlus /> Create a Post
-          </button>
-        </Link>
-      </div>
-
+            <h1 className="text-4xl font-bold text-center  "> Gossips Blogs</h1>
+        <Link href="/studio/structure/blogPost">
+        <button className='flex gap-4 items-center text-2xl border px-4 py-3 rounded-lg border-black'>
+          <FaFolderPlus  /> Create a Post </button>
+       </Link>
+        </div>
       <div className="container mx-auto p-4 px-11 justify-center gap-4 flex flex-wrap">
-        {error ? (
-          <p className="text-red-500">{error}</p>
-        ) : posts.length > 0 ? (
-          posts.map((item, index) => (
+        {posts.length > 0 ? (
+          posts.map((post, index) => (
             <div
               key={index}
               className="p-4 w-[350px] flex flex-col gap-4 h-auto border"
             >
-              <h1>Gossips Blogs</h1>
-              <h1 className="font-bold text-2xl">{item.heading}</h1>
+              <h1 className="font-bold text-2xl">{post.heading}</h1>
               <Image
-                src={item.imageUrl}
-                alt={item.heading}
+                src={post.imageUrl}
+                alt={post.heading}
                 width={300}
                 height={300}
               />
-              <p>{item.description}</p>
+              <p>{post.description}</p>
               <p className="underline">
-                {new Date(item.postDate).toLocaleDateString()}
+                {new Date(post.postDate).toLocaleDateString()}
               </p>
             </div>
           ))
@@ -87,6 +75,7 @@ export default function Blog() {
       </div>
     </div>
   );
-}
+};
 
+export default Blog;
 
