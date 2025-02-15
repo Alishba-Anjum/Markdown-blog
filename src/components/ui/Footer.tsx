@@ -1,4 +1,4 @@
-import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from "react-icons/fa";
+import { FaFacebook, FaInstagram, FaLinkedin, FaGithub } from "react-icons/fa";
 import Link from "next/link";
 
 const Footer = () => {
@@ -6,7 +6,7 @@ const Footer = () => {
     <footer className="  py-12">
       <div className="container mx-auto px-6">
         {/* Footer Top */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-8 max-sm:items-center">
           {/* About Section */}
           <div>
             <h3 className="text-2xl font-semibold mb-4">About Alishba Blogs</h3>
@@ -49,13 +49,13 @@ const Footer = () => {
               <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
                 <FaFacebook className="text-3xl hover:text-purple-300 transition-all" />
               </a>
-              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
-                <FaTwitter className="text-3xl hover:text-purple-300 transition-all" />
+              <a href="https://github.com/Alishba-Anjum" target="_blank" rel="noopener noreferrer">
+                <FaGithub className="text-3xl hover:text-purple-300 transition-all" />
               </a>
               <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
                 <FaInstagram className="text-3xl hover:text-purple-300 transition-all" />
               </a>
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+              <a href="www.linkedin.com/in/alishba-ahmed-khan-93895a2ba" target="_blank" rel="noopener noreferrer">
                 <FaLinkedin className="text-3xl hover:text-purple-300 transition-all" />
               </a>
             </div>
